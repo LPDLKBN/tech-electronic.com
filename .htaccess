@@ -1,0 +1,43 @@
+# Use PHP5 Single php.ini as default
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^tech-electronic.com [NC] 
+RewriteRule ^(.*)$ https://www.tech-electronic.com/$1 [L,R=301]
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ "https\:\/\/www\.tech-electronic\.com\/$1" [R=301,L]
+
+RewriteEngine On
+
+RewriteRule ^battery.html$ product-battery.php
+RewriteRule ^([B-Z0-9]{1,4})/([a-z-_\.\s]{1,})/([0-9a-z-_\.\s]{1,})/([a-z0-9-_\.\s]{1,})-([0-9]{1,}).html$ product-list.php?cate=$1&typename=$2&brand=$3&series=$4&page=$5
+RewriteRule ^([A0-9]{3})/([a-z-_\.\s]{1,})-([0-9]{1,}).html$ product-elect-list.php?cate=$1&typename=$2&page=$3
+RewriteRule ^([A0-9]{5})/([a-z-_\.\s]{1,})-([0-9]{1,}).html$ product-elect-list.php?cate=$1&typename=$2&page=$3
+
+RewriteRule ^([A-Z0-9]{1,4})/([a-z-_\.\s]{1,})/([0-9a-z-_\.\s]{1,})-([0-9]{1,}).html$ product-dldy.php?cate=$1&typename=$2&attr=$3&page=$4&%{QUERY_STRING}
+
+RewriteRule ^brand/([A-Z0-9]{1,4})/([a-z-_\.\s]{1,}).html$ product-brand.php?cate=$1&typename=$2
+
+RewriteRule ^([a-z-]{1,})/([B-K][0-9]{3})/([a-z0-9-_\.\s\/\(\)\*]{1,})-([0-9]{3,}).html$ product-battery-details.php?typename=$1&cate=2&keyword=$3&pid=$4
+RewriteRule ^([a-z-]{1,})/(A[0-9]{4})/([a-z0-9-_\.\s\/\(\)\*]{1,})-([0-9]{3,}).html$ product-elect-details.php?typename=$1&cate=2&keyword=$3&pid=$4
+
+RewriteRule ^cart.html$ product-cart.php
+RewriteRule ^checkout.html$ product-checkout.php
+RewriteRule ^battery-video-([0-9]{1,}).html$ product-video.php?page=$1
+RewriteRule ^battery-([a-z]+)-([0-9a-z-_\.\s]{1,})-([0-9]+).html$ product-hotnew.php?contype=$1&brand=$2&page=$3
+
+RewriteRule ^search.html$ product-search.php?%{QUERY_STRING}
+
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule .* - [L]
+RewriteEngine On
+RewriteRule ^index\.html$ index.php
+RewriteRule ^about\.html$ z_about.php
+RewriteRule ^payment\.html$ z_payment.php
+RewriteRule ^shipping\.html$ z_shipping.php
+RewriteRule ^return\.html$ z_return.php
+RewriteRule ^faq\.html$ z_faq.php
+
+RewriteEngine On
+ErrorDocument 404 /404.php
+</IfModule>
